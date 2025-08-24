@@ -1,14 +1,13 @@
-import { createConfig, http } from 'wagmi';
-import { mainnet, optimism, arbitrum, polygon, base } from 'wagmi/chains';
-import { injected, metaMask, coinbaseWallet } from 'wagmi/connectors';
+import { createConfig, http } from "wagmi";
+import { mainnet, optimism, arbitrum, polygon, base } from "wagmi/chains";
+import { injected, coinbaseWallet } from "wagmi/connectors";
 
 export const config = createConfig({
   chains: [optimism, mainnet, arbitrum, polygon, base],
   connectors: [
-    injected(),
-    metaMask(),
+    injected({ shimDisconnect: true }),
     coinbaseWallet({
-      appName: 'ChainMS',
+      appName: "ChainMS",
     }),
   ],
   transports: {

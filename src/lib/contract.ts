@@ -1,4 +1,4 @@
-import { createPublicClient, http, Address } from "viem";
+import { createPublicClient, http, type Address } from "viem";
 import { optimism } from "viem/chains";
 
 export const CONTRACT_ABI = [
