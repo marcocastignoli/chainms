@@ -5,6 +5,7 @@ ChainMS is a decentralized content management system that allows users to create
 ## 🌟 What is ChainMS?
 
 ChainMS enables users to:
+
 - **Create websites** using a visual drag-and-drop editor powered by [Puck](https://puckeditor.com/)
 - **Store content on-chain** - websites are permanently stored on the Optimism blockchain
 - **Access sites** via wallet addresses or ENS names in the format `/{address|ens_name}/{identifier}`
@@ -52,6 +53,7 @@ ChainMS enables users to:
 ## 🔮 Vision
 
 ChainMS demonstrates the potential for truly decentralized web content where:
+
 - **No servers** - content lives on the blockchain
 - **No censorship** - permanent and immutable storage
 - **True ownership** - only you control your content
@@ -59,4 +61,4 @@ ChainMS demonstrates the potential for truly decentralized web content where:
 
 ---
 
-*This is a proof of concept built to explore the possibilities of on-chain content management. All content is stored on the Optimism blockchain.*
+_This is a proof of concept built "vibe coding" to explore the possibilities of on-chain content management. All content is stored on the Optimism blockchain._
