@@ -14,27 +14,57 @@ export default function Homepage() {
         </div>
       </div>
       
+      <div className="examples-section">
+        <div className="examples-container">
+          <h2 className="examples-title">Try These Examples</h2>
+          <div className="examples-grid">
+            <a href="/0x7dBA08Bdc233B28e2c99723c402Fc8F4e35AB55B/test" className="example-card">
+              <div className="example-address">0x7dBA08Bdc233B28e2c99723c402Fc8F4e35AB55B</div>
+              <div className="example-id">test</div>
+            </a>
+            <a href="/vitalik.eth/homepage" className="example-card">
+              <div className="example-address">vitalik.eth</div>
+              <div className="example-id">homepage</div>
+            </a>
+          </div>
+        </div>
+      </div>
+
       <div className="main-content">
         <Wallet />
         
-        <div className="section">
-          <h2>How to use:</h2>
-        <ol>
-          <li>Connect your wallet using any supported provider</li>
-          <li>Select your preferred blockchain network</li>
-          <li>Visit <code>/{'{address|ens_name}'}/{'{identifier}'}</code> to view a website</li>
-          <li>If you're the owner, you'll see an edit button to modify the site</li>
-          <li>Use the Puck editor to create and modify your websites</li>
-          <li>Your changes are stored on-chain</li>
-        </ol>
-        </div>
-        
-        <div className="section">
-          <h3>Examples:</h3>
-        <ul>
-          <li><code>/0x1234.../my-site</code> - Access by Ethereum address</li>
-          <li><code>/vitalik.eth/homepage</code> - Access by ENS name</li>
-        </ul>
+        <div className="how-to-container">
+          <h2>How to use ChainMS</h2>
+          <div className="steps-grid">
+            <div className="step">
+              <div className="step-number">1</div>
+              <div className="step-content">
+                <h3>Connect Wallet</h3>
+                <p>Use any supported wallet provider</p>
+              </div>
+            </div>
+            <div className="step">
+              <div className="step-number">2</div>
+              <div className="step-content">
+                <h3>Select Network</h3>
+                <p>Choose your preferred blockchain</p>
+              </div>
+            </div>
+            <div className="step">
+              <div className="step-number">3</div>
+              <div className="step-content">
+                <h3>Visit Sites</h3>
+                <p>Access via /{'{address}'}/{'{id}'}</p>
+              </div>
+            </div>
+            <div className="step">
+              <div className="step-number">4</div>
+              <div className="step-content">
+                <h3>Edit & Create</h3>
+                <p>Own the address? Use our editor</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

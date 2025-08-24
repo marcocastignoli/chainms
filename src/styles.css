@@ -7,8 +7,13 @@ body {
 
 /* Wallet Connection Styles */
 .wallet-container {
-  padding: 1.5rem;
-  max-width: 600px;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
   margin: 0 auto;
 }
 
@@ -195,8 +200,8 @@ body {
 .hero-content {
   position: relative;
   z-index: 1;
-  max-width: 600px;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
 }
 
 .hero-title {
@@ -225,45 +230,137 @@ body {
   margin: 0 auto;
 }
 
-.main-content {
+/* Examples Section */
+.examples-section {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
   padding: 3rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.examples-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.examples-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 2rem 0;
+}
+
+.examples-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
   max-width: 800px;
   margin: 0 auto;
 }
 
-.section {
-  margin: 3rem 0;
+.example-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  display: block;
 }
 
-.section h2 {
-  font-size: 1.5rem;
-  color: #2c3e50;
-  margin: 0 0 1rem 0;
+.example-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border-color: #667eea;
+}
+
+.example-address {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 0.9rem;
+  color: #667eea;
   font-weight: 600;
+  margin-bottom: 0.5rem;
+  word-break: break-all;
 }
 
-.section h3 {
-  font-size: 1.25rem;
-  color: #34495e;
-  margin: 0 0 1rem 0;
+.example-id {
+  font-size: 1.1rem;
+  color: #2c3e50;
   font-weight: 500;
 }
 
-.section ol, .section ul {
-  line-height: 1.7;
-  color: #555;
+.main-content {
+  padding: 4rem 2rem;
+  width: 100%;
+  margin: 0;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
-.section li {
-  margin-bottom: 0.5rem;
+/* How To Section */
+.how-to-container {
+  background: rgba(248, 249, 250, 0.8);
+  border-radius: 16px;
+  padding: 3rem;
+  margin: 3rem 0;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.section code {
+.how-to-container h2 {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin: 0 0 2.5rem 0;
+  font-weight: 600;
+  text-align: center;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.step-number {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.step-content h3 {
+  font-size: 1.2rem;
+  color: #2c3e50;
+  margin: 0 0 0.5rem 0;
+  font-weight: 600;
+}
+
+.step-content p {
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.step-content code {
   background: #f8f9fa;
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-  font-size: 0.9em;
+  font-size: 0.85em;
   color: #e83e8c;
 }
 
@@ -284,8 +381,40 @@ body {
     font-size: 1rem;
   }
   
-  .main-content {
+  .examples-section {
     padding: 2rem 1rem;
+  }
+  
+  .examples-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .examples-title {
+    font-size: 1.5rem;
+  }
+  
+  .main-content {
+    padding: 3rem 1rem;
+  }
+  
+  .how-to-container {
+    padding: 2rem 1rem;
+    margin: 2rem 0;
+  }
+  
+  .how-to-container h2 {
+    font-size: 1.5rem;
+  }
+  
+  .steps-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .wallet-container {
+    padding: 1.5rem;
+    margin: 2rem 0;
   }
 }
 
