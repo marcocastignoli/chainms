@@ -1,4 +1,5 @@
 import { Wallet } from "../components/Wallet";
+import { Link } from "react-router-dom";
 
 export default function Homepage() {
   return (
@@ -18,14 +19,14 @@ export default function Homepage() {
         <div className="examples-container">
           <h2 className="examples-title">Try These Examples</h2>
           <div className="examples-grid">
-            <a href="/0x7dBA08Bdc233B28e2c99723c402Fc8F4e35AB55B/test" className="example-card">
+            <Link to="/0x7dBA08Bdc233B28e2c99723c402Fc8F4e35AB55B/test" className="example-card">
               <div className="example-address">0x7dBA08Bdc233B28e2c99723c402Fc8F4e35AB55B</div>
               <div className="example-id">test</div>
-            </a>
-            <a href="/vitalik.eth/homepage" className="example-card">
+            </Link>
+            <Link to="/vitalik.eth/homepage" className="example-card">
               <div className="example-address">vitalik.eth</div>
               <div className="example-id">homepage</div>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
