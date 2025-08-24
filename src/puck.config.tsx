@@ -20,6 +20,7 @@ function ContractViewComponent({ address, abi, functionName, parameters, autoCal
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [result, setResult] = useState<{ type: "success" | "error"; data: any } | null>(null);
   const [loading, setLoading] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   // Parse ABI and parameters with error states
   const [parsedAbi, setParsedAbi] = useState<JsonFragment[] | null>(null);
@@ -85,7 +86,7 @@ function ContractViewComponent({ address, abi, functionName, parameters, autoCal
       // Handle tuple type with components
       if (output.type === "tuple" && output.components) {
         return (
-          <table style={{ marginTop: "8px", width: "100%", borderCollapse: "collapse" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <tbody>
               {output.components.map((component, index) => {
                 const componentName = component.name || `field_${index}`;
@@ -95,11 +96,25 @@ function ContractViewComponent({ address, abi, functionName, parameters, autoCal
                   : (Array.isArray(data) ? data[index] : data);
                 
                 return (
-                  <tr key={index}>
-                    <td style={{ border: "1px solid #ccc", padding: "4px", backgroundColor: "#f8f9fa", fontWeight: "bold" }}>
+                  <tr key={index} style={{ borderBottom: index < output.components!.length - 1 ? "1px solid #e5e7eb" : "none" }}>
+                    <td style={{ 
+                      padding: "12px 16px", 
+                      backgroundColor: "#f9fafb", 
+                      fontWeight: "500",
+                      color: "#374151",
+                      fontSize: "14px",
+                      width: "30%",
+                      verticalAlign: "top"
+                    }}>
                       {componentName}
                     </td>
-                    <td style={{ border: "1px solid #ccc", padding: "4px", wordBreak: "break-all", fontFamily: "monospace" }}>
+                    <td style={{ 
+                      padding: "12px 16px", 
+                      wordBreak: "break-all", 
+                      fontFamily: "monospace",
+                      fontSize: "14px",
+                      color: "#1f2937"
+                    }}>
                       {formatValue(value, component.type || "unknown")}
                     </td>
                   </tr>
@@ -112,13 +127,27 @@ function ContractViewComponent({ address, abi, functionName, parameters, autoCal
       
       // Regular single output (non-tuple)
       return (
-        <table style={{ marginTop: "8px", width: "100%", borderCollapse: "collapse" }}>
+        <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <tbody>
             <tr>
-              <td style={{ border: "1px solid #ccc", padding: "4px", backgroundColor: "#f8f9fa", fontWeight: "bold" }}>
+              <td style={{ 
+                padding: "12px 16px", 
+                backgroundColor: "#f9fafb", 
+                fontWeight: "500",
+                color: "#374151",
+                fontSize: "14px",
+                width: "30%",
+                verticalAlign: "top"
+              }}>
                 {output.name || "result"}
               </td>
-              <td style={{ border: "1px solid #ccc", padding: "4px", wordBreak: "break-all", fontFamily: "monospace" }}>
+              <td style={{ 
+                padding: "12px 16px", 
+                wordBreak: "break-all", 
+                fontFamily: "monospace",
+                fontSize: "14px",
+                color: "#1f2937"
+              }}>
                 {formatValue(data, output.type || "unknown")}
               </td>
             </tr>
@@ -131,14 +160,28 @@ function ContractViewComponent({ address, abi, functionName, parameters, autoCal
     const dataArray = Array.isArray(data) ? data : [data];
     
     return (
-      <table style={{ marginTop: "8px", width: "100%", borderCollapse: "collapse" }}>
+      <table style={{ width: "100%", borderCollapse: "collapse" }}>
         <tbody>
           {func.outputs.map((output, index) => (
-            <tr key={index}>
-              <td style={{ border: "1px solid #ccc", padding: "4px", backgroundColor: "#f8f9fa", fontWeight: "bold" }}>
+            <tr key={index} style={{ borderBottom: index < (func.outputs?.length || 0) - 1 ? "1px solid #e5e7eb" : "none" }}>
+              <td style={{ 
+                padding: "12px 16px", 
+                backgroundColor: "#f9fafb", 
+                fontWeight: "500",
+                color: "#374151",
+                fontSize: "14px",
+                width: "30%",
+                verticalAlign: "top"
+              }}>
                 {output.name || `output_${index}`}
               </td>
-              <td style={{ border: "1px solid #ccc", padding: "4px", wordBreak: "break-all", fontFamily: "monospace" }}>
+              <td style={{ 
+                padding: "12px 16px", 
+                wordBreak: "break-all", 
+                fontFamily: "monospace",
+                fontSize: "14px",
+                color: "#1f2937"
+              }}>
                 {formatValue(dataArray[index], output.type || "unknown")}
               </td>
             </tr>
@@ -198,52 +241,110 @@ function ContractViewComponent({ address, abi, functionName, parameters, autoCal
   return (
     <div style={{ padding: "16px 0", textAlign: align }}>
       <div style={{ 
-        border: "1px solid #ddd", 
-        borderRadius: "8px", 
-        padding: "16px",
-        backgroundColor: "#f0f8ff"
+        border: "1px solid #e1e5e9", 
+        borderRadius: "12px", 
+        padding: "24px",
+        backgroundColor: "white",
+        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)"
       }}>
-        <h3 style={{ margin: "0 0 16px 0", fontSize: "18px" }}>Contract View: {functionName}</h3>
-        <div style={{ marginBottom: "16px", fontSize: "14px", color: "#666" }}>
-          <strong>Address:</strong> {address}
-        </div>
+        <h3 style={{ 
+          margin: "0 0 20px 0", 
+          fontSize: "20px", 
+          fontWeight: "600",
+          color: "#1a202c"
+        }}>
+          {functionName}
+        </h3>
         
-        {targetFunction && targetFunction.inputs && targetFunction.inputs.length > 0 && (
-          <div style={{ marginBottom: "12px", fontSize: "14px", color: "#666" }}>
-            <strong>Parameters:</strong> {JSON.stringify(parsedParams)}
+        <div style={{ marginBottom: "20px", display: "flex", gap: "12px", alignItems: "center" }}>
+          <button
+            style={{
+              padding: "10px 16px",
+              backgroundColor: loading ? "#9ca3af" : "#3b82f6",
+              color: "white",
+              border: "none",
+              borderRadius: "8px",
+              cursor: loading ? "not-allowed" : "pointer",
+              fontSize: "14px",
+              fontWeight: "500",
+              transition: "all 0.2s",
+              boxShadow: loading ? "none" : "0 1px 3px rgba(0, 0, 0, 0.1)"
+            }}
+            onClick={callFunction}
+            disabled={loading}
+          >
+            {loading ? "Loading..." : `Refresh Data`}
+          </button>
+
+          <button
+            style={{
+              padding: "10px 16px",
+              backgroundColor: "transparent",
+              color: "#6b7280",
+              border: "1px solid #d1d5db",
+              borderRadius: "8px",
+              cursor: "pointer",
+              fontSize: "14px",
+              fontWeight: "500",
+              transition: "all 0.2s"
+            }}
+            onClick={() => setShowAdvanced(!showAdvanced)}
+          >
+            {showAdvanced ? "Hide" : "Show"} details
+          </button>
+        </div>
+
+        {showAdvanced && (
+          <div style={{ 
+            marginBottom: "20px", 
+            padding: "16px", 
+            backgroundColor: "#f9fafb", 
+            border: "1px solid #e5e7eb",
+            borderRadius: "8px",
+            fontSize: "14px", 
+            color: "#6b7280" 
+          }}>
+            <div style={{ marginBottom: "12px" }}>
+              <div style={{ fontWeight: "500", color: "#374151", marginBottom: "4px" }}>Contract Address</div>
+              <div style={{ fontFamily: "monospace", fontSize: "12px", wordBreak: "break-all" }}>{address}</div>
+            </div>
+            {targetFunction && targetFunction.inputs && targetFunction.inputs.length > 0 && (
+              <div>
+                <div style={{ fontWeight: "500", color: "#374151", marginBottom: "4px" }}>Parameters</div>
+                <div style={{ fontFamily: "monospace", fontSize: "12px" }}>{JSON.stringify(parsedParams)}</div>
+              </div>
+            )}
           </div>
         )}
 
-        <button
-          style={{
-            padding: "8px 16px",
-            backgroundColor: loading ? "#6c757d" : "#28a745",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: loading ? "not-allowed" : "pointer",
-            fontSize: "14px",
-            fontWeight: "bold",
-            marginBottom: "12px"
-          }}
-          onClick={callFunction}
-          disabled={loading}
-        >
-          {loading ? "Loading..." : `Call ${functionName}`}
-        </button>
-
         {result && (
           <div style={{ 
-            padding: "12px", 
-            borderRadius: "4px",
-            backgroundColor: result.type === "success" ? "#d4edda" : "#f8d7da",
-            color: result.type === "success" ? "#155724" : "#721c24",
-            fontSize: "14px"
+            border: "1px solid #d8d8d8ff",
+            borderRadius: "8px",
+            overflow: "hidden"
           }}>
-            <strong>{result.type === "success" ? "✓ Result:" : "✗ Error:"}</strong>
-            {result.type === "success" ? renderResultTable(result.data, targetFunction) : (
-              <div style={{ marginTop: "4px", wordBreak: "break-all" }}>{String(result.data)}</div>
-            )}
+            <div style={{ 
+              display: result.type == "success" ? "none" : "block",
+              padding: "12px 16px", 
+              borderBottom: result.type === "success" ? "1px solid #d1fae5" : "1px solid #fecaca",
+              fontSize: "14px",
+              fontWeight: "500",
+              color: result.type === "success" ? "#166534" : "#dc2626"
+            }}>
+              {result.type != "success" && "✗ Error"}
+            </div>
+            <div style={{ padding: "16px" }}>
+              {result.type === "success" ? renderResultTable(result.data, targetFunction) : (
+                <div style={{ 
+                  fontSize: "14px", 
+                  color: "#dc2626", 
+                  wordBreak: "break-all",
+                  fontFamily: "monospace" 
+                }}>
+                  {String(result.data)}
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>
@@ -303,64 +404,108 @@ function ContractWriteComponent({ address, abi, align }: { address: string; abi:
       case "int256":
       case "int":
         return (
-          <input
-            key={inputId}
-            ref={(el) => { if (el) inputRefs.current[inputId] = el; }}
-            type="number"
-            placeholder={`${input.name} (${input.type})`}
-            style={{
-              width: "100%",
-              padding: "8px",
-              marginBottom: "8px",
-              border: "1px solid #ccc",
-              borderRadius: "4px"
-            }}
-          />
+          <div key={inputId} style={{ display: "flex", flexDirection: "column" }}>
+            <label style={{ 
+              fontSize: "14px", 
+              fontWeight: "500", 
+              color: "#374151", 
+              marginBottom: "6px" 
+            }}>
+              {input.name} <span style={{ color: "#6b7280", fontWeight: "400" }}>({input.type})</span>
+            </label>
+            <input
+              ref={(el) => { if (el) inputRefs.current[inputId] = el; }}
+              type="number"
+              placeholder={`Enter ${input.name}`}
+              style={{
+                width: "100%",
+                padding: "12px",
+                border: "1px solid #d1d5db",
+                borderRadius: "8px",
+                fontSize: "14px",
+                backgroundColor: "white",
+                transition: "border-color 0.2s"
+              }}
+            />
+          </div>
         );
       case "bool":
         return (
-          <label key={inputId} style={{ display: "block", marginBottom: "8px" }}>
+          <div key={inputId} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <input 
               ref={(el) => { if (el) inputRefs.current[inputId] = el; }}
               type="checkbox" 
-              style={{ marginRight: "8px" }} 
+              style={{ 
+                width: "16px", 
+                height: "16px",
+                borderRadius: "4px"
+              }} 
             />
-            {input.name} ({input.type})
-          </label>
+            <label style={{ 
+              fontSize: "14px", 
+              fontWeight: "500", 
+              color: "#374151" 
+            }}>
+              {input.name} <span style={{ color: "#6b7280", fontWeight: "400" }}>({input.type})</span>
+            </label>
+          </div>
         );
       case "address":
         return (
-          <input
-            key={inputId}
-            ref={(el) => { if (el) inputRefs.current[inputId] = el; }}
-            type="text"
-            placeholder={`${input.name} (${input.type}) - 0x...`}
-            style={{
-              width: "100%",
-              padding: "8px",
-              marginBottom: "8px",
-              border: "1px solid #ccc",
-              borderRadius: "4px"
-            }}
-          />
+          <div key={inputId} style={{ display: "flex", flexDirection: "column" }}>
+            <label style={{ 
+              fontSize: "14px", 
+              fontWeight: "500", 
+              color: "#374151", 
+              marginBottom: "6px" 
+            }}>
+              {input.name} <span style={{ color: "#6b7280", fontWeight: "400" }}>({input.type})</span>
+            </label>
+            <input
+              ref={(el) => { if (el) inputRefs.current[inputId] = el; }}
+              type="text"
+              placeholder="0x..."
+              style={{
+                width: "100%",
+                padding: "12px",
+                border: "1px solid #d1d5db",
+                borderRadius: "8px",
+                fontSize: "14px",
+                backgroundColor: "white",
+                fontFamily: "monospace",
+                transition: "border-color 0.2s"
+              }}
+            />
+          </div>
         );
       case "string":
       case "bytes":
       default:
         return (
-          <input
-            key={inputId}
-            ref={(el) => { if (el) inputRefs.current[inputId] = el; }}
-            type="text"
-            placeholder={`${input.name} (${input.type})`}
-            style={{
-              width: "100%",
-              padding: "8px",
-              marginBottom: "8px",
-              border: "1px solid #ccc",
-              borderRadius: "4px"
-            }}
-          />
+          <div key={inputId} style={{ display: "flex", flexDirection: "column" }}>
+            <label style={{ 
+              fontSize: "14px", 
+              fontWeight: "500", 
+              color: "#374151", 
+              marginBottom: "6px" 
+            }}>
+              {input.name} <span style={{ color: "#6b7280", fontWeight: "400" }}>({input.type})</span>
+            </label>
+            <input
+              ref={(el) => { if (el) inputRefs.current[inputId] = el; }}
+              type="text"
+              placeholder={`Enter ${input.name}`}
+              style={{
+                width: "100%",
+                padding: "12px",
+                border: "1px solid #d1d5db",
+                borderRadius: "8px",
+                fontSize: "14px",
+                backgroundColor: "white",
+                transition: "border-color 0.2s"
+              }}
+            />
+          </div>
         );
     }
   };
@@ -393,68 +538,132 @@ function ContractWriteComponent({ address, abi, align }: { address: string; abi:
   return (
     <div style={{ padding: "16px 0", textAlign: align }}>
       <div style={{ 
-        border: "1px solid #ddd", 
-        borderRadius: "8px", 
-        padding: "16px",
-        backgroundColor: "#fff8f0"
+        border: "1px solid #e1e5e9", 
+        borderRadius: "12px", 
+        padding: "24px",
+        backgroundColor: "white",
+        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)"
       }}>
-        <h3 style={{ margin: "0 0 16px 0", fontSize: "18px" }}>Contract Write Functions</h3>
-        <div style={{ marginBottom: "16px", fontSize: "14px", color: "#666" }}>
-          <strong>Address:</strong> {address}
+
+        <div style={{ 
+          marginBottom: "20px", 
+          padding: "12px 16px", 
+          backgroundColor: "#f9fafb", 
+          border: "1px solid #e5e7eb",
+          borderRadius: "8px",
+          fontSize: "14px", 
+          color: "#6b7280" 
+        }}>
+          <div style={{ fontWeight: "500", color: "#374151", marginBottom: "4px" }}>Contract Address</div>
+          <div style={{ fontFamily: "monospace", fontSize: "12px", wordBreak: "break-all" }}>{address}</div>
         </div>
 
         {functions.length === 0 ? (
-          <div style={{ color: "#666", fontStyle: "italic" }}>No write functions found in ABI</div>
+          <div style={{ 
+            color: "#6b7280", 
+            fontStyle: "italic", 
+            textAlign: "center", 
+            padding: "40px 20px",
+            backgroundColor: "#f9fafb",
+            borderRadius: "8px",
+            border: "1px solid #e5e7eb"
+          }}>
+            No write functions found in ABI
+          </div>
         ) : (
-          functions.map((func, funcIndex: number) => (
-            <div key={funcIndex} style={{ 
-              marginBottom: "16px", 
-              padding: "12px", 
-              border: "1px solid #eee", 
-              borderRadius: "6px",
-              backgroundColor: "white"
-            }}>
-              <h5 style={{ margin: "0 0 8px 0", fontSize: "14px", fontWeight: "bold" }}>
-                {func.name}
-              </h5>
-              {func.inputs && func.inputs.length > 0 && (
-                <div style={{ marginBottom: "12px" }}>
-                  {func.inputs.map((input, inputIndex: number) => 
-                    renderInput(input, func.name, inputIndex)
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            {functions.map((func, funcIndex: number) => (
+              <div key={funcIndex} style={{ 
+                border: "1px solid #e5e7eb", 
+                borderRadius: "12px",
+                backgroundColor: "white",
+                overflow: "hidden"
+              }}>
+                <div style={{ 
+                  padding: "16px 20px", 
+                  backgroundColor: "#f9fafb",
+                  borderBottom: "1px solid #e5e7eb"
+                }}>
+                  <h5 style={{ 
+                    margin: "0", 
+                    fontSize: "16px", 
+                    fontWeight: "600",
+                    color: "#1a202c"
+                  }}>
+                    {func.name}
+                  </h5>
+                </div>
+                
+                <div style={{ padding: "20px" }}>
+                  {func.inputs && func.inputs.length > 0 && (
+                    <div style={{ marginBottom: "20px" }}>
+                      <div style={{ 
+                        fontSize: "14px", 
+                        fontWeight: "500", 
+                        color: "#374151", 
+                        marginBottom: "12px" 
+                      }}>
+                        Parameters:
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                        {func.inputs.map((input, inputIndex: number) => 
+                          renderInput(input, func.name, inputIndex)
+                        )}
+                      </div>
+                    </div>
+                  )}
+                  
+                  <button
+                    style={{
+                      padding: "12px 20px",
+                      backgroundColor: "#dc2626",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                      fontSize: "14px",
+                      fontWeight: "500",
+                      transition: "all 0.2s",
+                      boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+                      marginBottom: results[func.name!] ? "16px" : "0"
+                    }}
+                    onClick={() => executeFunction(func)}
+                  >
+                    Execute {func.name}
+                  </button>
+                  
+                  {results[func.name!] && (
+                    <div style={{ 
+                      border: results[func.name!].type === "success" ? "1px solid #d1fae5" : "1px solid #fecaca",
+                      borderRadius: "8px",
+                      backgroundColor: results[func.name!].type === "success" ? "#f0fdf4" : "#fef2f2",
+                      overflow: "hidden"
+                    }}>
+                      <div style={{ 
+                        padding: "12px 16px", 
+                        backgroundColor: results[func.name!].type === "success" ? "#dcfce7" : "#fee2e2",
+                        borderBottom: results[func.name!].type === "success" ? "1px solid #d1fae5" : "1px solid #fecaca",
+                        fontSize: "14px",
+                        fontWeight: "500",
+                        color: results[func.name!].type === "success" ? "#166534" : "#dc2626"
+                      }}>
+                        {results[func.name!].type === "success" ? "✓ Transaction Sent" : "✗ Error"}
+                      </div>
+                      <div style={{ 
+                        padding: "16px",
+                        fontSize: "14px",
+                        wordBreak: "break-all",
+                        fontFamily: "monospace",
+                        color: results[func.name!].type === "success" ? "#166534" : "#dc2626"
+                      }}>
+                        {String(results[func.name!].data)}
+                      </div>
+                    </div>
                   )}
                 </div>
-              )}
-              <button
-                style={{
-                  padding: "8px 16px",
-                  backgroundColor: "#007bff",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                  fontSize: "14px",
-                  fontWeight: "bold"
-                }}
-                onClick={() => executeFunction(func)}
-              >
-                Execute {func.name}
-              </button>
-              {results[func.name!] && (
-                <div style={{ 
-                  marginTop: "8px", 
-                  padding: "8px", 
-                  borderRadius: "4px",
-                  backgroundColor: results[func.name!].type === "success" ? "#d4edda" : "#f8d7da",
-                  color: results[func.name!].type === "success" ? "#155724" : "#721c24",
-                  fontSize: "12px",
-                  wordBreak: "break-all"
-                }}>
-                  {results[func.name!].type === "success" ? "✓ " : "✗ "}
-                  {String(results[func.name!].data)}
-                </div>
-              )}
-            </div>
-          ))
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </div>
