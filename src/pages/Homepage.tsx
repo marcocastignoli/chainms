@@ -1,7 +1,20 @@
 import { Wallet } from "../components/Wallet";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAccount } from "wagmi";
+import { useState } from "react";
 
 export default function Homepage() {
+  const { isConnected, address } = useAccount();
+  const navigate = useNavigate();
+  const [pageName, setPageName] = useState("");
+
+  const handleCreateWebsite = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (pageName.trim() && address) {
+      navigate(`/puck/${address}/${pageName.trim()}`);
+    }
+  };
+
   return (
     <div className="homepage-container">
       <div className="hero-banner">
@@ -23,11 +36,34 @@ export default function Homepage() {
               <div className="example-address">0x7dBA08Bdc233B28e2c99723c402Fc8F4e35AB55B</div>
               <div className="example-id">test</div>
             </Link>
-            <Link to="/vitalik.eth/homepage" className="example-card">
-              <div className="example-address">vitalik.eth</div>
-              <div className="example-id">homepage</div>
+            <Link to="/0xC3F6e18b429b6BAf1bD31B1E504aee7827C7AAb5/prova" className="example-card">
+              <div className="example-address">0xC3F6e18b429b6BAf1bD31B1E504aee7827C7AAb5</div>
+              <div className="example-id">prova</div>
             </Link>
           </div>
+        </div>
+      </div>
+
+      <div className="create-section">
+        <div className="create-container">
+          <h2 className="create-title">Create Your Website</h2>
+          {isConnected ? (
+            <form onSubmit={handleCreateWebsite} className="create-form">
+              <input
+                type="text"
+                placeholder="Page name"
+                value={pageName}
+                onChange={(e) => setPageName(e.target.value)}
+                className="page-name-input"
+                required
+              />
+              <button type="submit" className="create-button">
+                Create Now
+              </button>
+            </form>
+          ) : (
+            <p className="sign-in-message">Please sign in to create your website</p>
+          )}
         </div>
       </div>
 
