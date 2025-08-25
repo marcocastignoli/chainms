@@ -299,29 +299,53 @@ function ContractViewRenderer({ address, abi, functionName, parameters, autoCall
     <div style={{ padding: "16px 0", textAlign: align }}>
       <div>
         {result && (
-          <div style={{ 
-            border: "1px solid #d8d8d8ff",
+          <div style={{
             borderRadius: "8px",
             overflow: "hidden"
           }}>
-            <button
-            style={{
-              padding: "10px 16px",
-              backgroundColor: "transparent",
-              color: "#6b7280",
-              border: "1px solid #d1d5db",
-              borderRadius: "8px",
-              cursor: "pointer",
-              fontSize: "14px",
-              fontWeight: "500",
-              transition: "all 0.2s",
-              marginTop: "20px",
-              marginLeft: "20px",
-            }}
-            onClick={() => setShowAdvanced(!showAdvanced)}
-          >
-            {showAdvanced ? "Hide" : "Show"} details
-          </button>
+            <div >
+              {result.type === "success" ? (
+                currentFormatType === "markdown" ? renderResultMarkdown(result.data, targetFunction) : renderResultTable(result.data, targetFunction)
+              ) : (
+                <>
+                  <div style={{ 
+                    fontSize: "14px",
+                    fontWeight: "500",
+                    color: "#dc2626",
+                    marginBottom: "12px"
+                  }}>
+                    ✗ Error
+                  </div>
+                  <div style={{ 
+                    fontSize: "14px", 
+                    color: "#dc2626", 
+                    wordBreak: "break-all",
+                    fontFamily: "monospace"
+                  }}>
+                    {String(result.data)}
+                  </div>
+                </>
+              )}
+            </div>
+            
+            <div>
+              <button
+                style={{
+                  padding: "6px 12px",
+                  backgroundColor: "transparent",
+                  color: "#6b7280",
+                  border: "1px solid #d1d5db",
+                  borderRadius: "6px",
+                  cursor: "pointer",
+                  fontSize: "12px",
+                  fontWeight: "500",
+                  transition: "all 0.2s"
+                }}
+                onClick={() => setShowAdvanced(!showAdvanced)}
+              >
+                {showAdvanced ? "Hide" : "Show"} details
+              </button>
+            </div>
           {showAdvanced && (
           <div style={{ 
             marginTop: "20px", 
@@ -408,30 +432,6 @@ function ContractViewRenderer({ address, abi, functionName, parameters, autoCall
         </div>
           </div>
         )}
-            <div style={{ 
-              display: result.type == "success" ? "none" : "block",
-              padding: "12px 16px", 
-              borderBottom: result.type === "success" ? "1px solid #d1fae5" : "1px solid #fecaca",
-              fontSize: "14px",
-              fontWeight: "500",
-              color: result.type === "success" ? "#166534" : "#dc2626"
-            }}>
-              {result.type != "success" && "✗ Error"}
-            </div>
-            <div style={{ padding: "16px" }}>
-              {result.type === "success" ? (
-                currentFormatType === "markdown" ? renderResultMarkdown(result.data, targetFunction) : renderResultTable(result.data, targetFunction)
-              ) : (
-                <div style={{ 
-                  fontSize: "14px", 
-                  color: "#dc2626", 
-                  wordBreak: "break-all",
-                  fontFamily: "monospace" 
-                }}>
-                  {String(result.data)}
-                </div>
-              )}
-            </div>
           </div>
         )}
       </div>
