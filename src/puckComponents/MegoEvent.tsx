@@ -118,7 +118,12 @@ function MegoEventRenderer({ eventId, align }: MegoEventProps) {
 
   if (loading) {
     return (
-      <div style={{ padding: "2rem", textAlign: align }}>
+      <div style={{ 
+        padding: "2rem", 
+        textAlign: align,
+        width: "100%",
+        boxSizing: "border-box"
+      }}>
         <div style={{ 
           display: "inline-block", 
           padding: "1rem 2rem", 
@@ -126,7 +131,9 @@ function MegoEventRenderer({ eventId, align }: MegoEventProps) {
           borderRadius: "12px",
           border: "1px solid rgba(0, 0, 0, 0.05)",
           color: "#666",
-          fontWeight: "500"
+          fontWeight: "500",
+          maxWidth: "100%",
+          boxSizing: "border-box"
         }}>
           Loading event data...
         </div>
@@ -136,14 +143,21 @@ function MegoEventRenderer({ eventId, align }: MegoEventProps) {
 
   if (error) {
     return (
-      <div style={{ padding: "2rem", textAlign: align }}>
+      <div style={{ 
+        padding: "2rem", 
+        textAlign: align,
+        width: "100%",
+        boxSizing: "border-box"
+      }}>
         <div style={{ 
           padding: "1rem 2rem", 
           background: "rgba(220, 38, 38, 0.05)",
           border: "1px solid rgba(220, 38, 38, 0.2)",
           borderRadius: "12px",
           color: "#dc2626",
-          fontWeight: "500"
+          fontWeight: "500",
+          maxWidth: "100%",
+          boxSizing: "border-box"
         }}>
           Error: {error}
         </div>
@@ -153,14 +167,21 @@ function MegoEventRenderer({ eventId, align }: MegoEventProps) {
 
   if (!ticketData || !ticketData.exists) {
     return (
-      <div style={{ padding: "2rem", textAlign: align }}>
+      <div style={{ 
+        padding: "2rem", 
+        textAlign: align,
+        width: "100%",
+        boxSizing: "border-box"
+      }}>
         <div style={{ 
           padding: "1rem 2rem", 
           background: "rgba(251, 191, 36, 0.05)",
           border: "1px solid rgba(251, 191, 36, 0.2)",
           borderRadius: "12px",
           color: "#92400e",
-          fontWeight: "500"
+          fontWeight: "500",
+          maxWidth: "100%",
+          boxSizing: "border-box"
         }}>
           No event found for ID: {eventId}
         </div>
@@ -179,24 +200,38 @@ function MegoEventRenderer({ eventId, align }: MegoEventProps) {
   };
 
   return (
-    <div style={{ textAlign: align }}>
+    <div style={{ 
+      textAlign: align, 
+      width: "100%",
+      padding: "0",
+      margin: "0",
+      boxSizing: "border-box"
+    }}>
       <div style={{
-        maxWidth: "400px",
-        margin: align === "center" ? "0 auto" : align === "right" ? "0 0 0 auto" : "0",
+        margin: "0",
+        maxWidth: "100%",
+        width: "100%",
         background: "white",
         borderRadius: "12px",
         boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-        overflow: "hidden"
+        overflow: "hidden",
+        boxSizing: "border-box"
       }}>
         {ticketData.image && (
-          <div style={{ position: "relative", width: "400px", height: "400px" }}>
+          <div style={{ 
+            position: "relative", 
+            width: "100%", 
+            height: "400px",
+            boxSizing: "border-box"
+          }}>
             <img 
               src={ticketData.image} 
               alt={ticketData.name}
               style={{
                 width: "100%",
                 height: "100%",
-                objectFit: "cover"
+                objectFit: "cover",
+                boxSizing: "border-box"
               }}
             />
             <div style={{

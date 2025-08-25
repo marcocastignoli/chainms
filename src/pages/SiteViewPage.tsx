@@ -92,7 +92,9 @@ export function SiteViewPage() {
               Connect Wallet
             </button>
           </div>
-          <Render config={config} data={data} />
+          <div style={{ padding: '0 20px' }}>
+            <Render config={config} data={data} />
+          </div>
         </div>
       </div>
     );
@@ -124,7 +126,9 @@ export function SiteViewPage() {
               Edit this page
             </button>
           </div>
-          <Render config={config} data={data} />
+          <div style={{ padding: '0 20px' }}>
+            <Render config={config} data={data} />
+          </div>
         </div>
       </div>
     );
