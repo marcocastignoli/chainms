@@ -118,13 +118,15 @@ function MegoEventRenderer({ eventId, align }: MegoEventProps) {
 
   if (loading) {
     return (
-      <div style={{ padding: "20px", textAlign: align }}>
+      <div style={{ padding: "2rem", textAlign: align }}>
         <div style={{ 
           display: "inline-block", 
-          padding: "12px 24px", 
-          backgroundColor: "#f3f4f6",
-          borderRadius: "8px",
-          color: "#6b7280"
+          padding: "1rem 2rem", 
+          background: "rgba(248, 249, 250, 0.8)",
+          borderRadius: "12px",
+          border: "1px solid rgba(0, 0, 0, 0.05)",
+          color: "#666",
+          fontWeight: "500"
         }}>
           Loading event data...
         </div>
@@ -134,13 +136,14 @@ function MegoEventRenderer({ eventId, align }: MegoEventProps) {
 
   if (error) {
     return (
-      <div style={{ padding: "20px", textAlign: align }}>
+      <div style={{ padding: "2rem", textAlign: align }}>
         <div style={{ 
-          padding: "12px 24px", 
-          backgroundColor: "#fef2f2",
-          border: "1px solid #fecaca",
-          borderRadius: "8px",
-          color: "#dc2626"
+          padding: "1rem 2rem", 
+          background: "rgba(220, 38, 38, 0.05)",
+          border: "1px solid rgba(220, 38, 38, 0.2)",
+          borderRadius: "12px",
+          color: "#dc2626",
+          fontWeight: "500"
         }}>
           Error: {error}
         </div>
@@ -150,13 +153,14 @@ function MegoEventRenderer({ eventId, align }: MegoEventProps) {
 
   if (!ticketData || !ticketData.exists) {
     return (
-      <div style={{ padding: "20px", textAlign: align }}>
+      <div style={{ padding: "2rem", textAlign: align }}>
         <div style={{ 
-          padding: "12px 24px", 
-          backgroundColor: "#fef3c7",
-          border: "1px solid #fcd34d",
-          borderRadius: "8px",
-          color: "#92400e"
+          padding: "1rem 2rem", 
+          background: "rgba(251, 191, 36, 0.05)",
+          border: "1px solid rgba(251, 191, 36, 0.2)",
+          borderRadius: "12px",
+          color: "#92400e",
+          fontWeight: "500"
         }}>
           No event found for ID: {eventId}
         </div>
@@ -175,66 +179,77 @@ function MegoEventRenderer({ eventId, align }: MegoEventProps) {
   };
 
   return (
-    <div style={{ padding: "20px", textAlign: align }}>
+    <div style={{ textAlign: align }}>
       <div style={{
-        maxWidth: "600px",
+        maxWidth: "400px",
         margin: align === "center" ? "0 auto" : align === "right" ? "0 0 0 auto" : "0",
-        backgroundColor: "white",
-        borderRadius: "16px",
-        boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+        background: "white",
+        borderRadius: "12px",
+        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
         overflow: "hidden"
       }}>
         {ticketData.image && (
-          <div style={{ position: "relative", paddingBottom: "40%", overflow: "hidden" }}>
+          <div style={{ position: "relative", width: "400px", height: "400px" }}>
             <img 
               src={ticketData.image} 
               alt={ticketData.name}
               style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
                 width: "100%",
                 height: "100%",
                 objectFit: "cover"
               }}
             />
+            <div style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              background: "linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%)",
+              padding: "2rem 1.5rem 1.5rem 1.5rem"
+            }}>
+              <h2 style={{ 
+                margin: "0 0 0.5rem 0", 
+                fontSize: "1.5rem", 
+                fontWeight: "700",
+                color: "white",
+                lineHeight: "1.2"
+              }}>
+                {ticketData.name}
+              </h2>
+              
+              {apiData?.event_location && (
+                <div style={{ 
+                  color: "rgba(255, 255, 255, 0.9)", 
+                  fontSize: "0.9rem", 
+                  marginBottom: "0.25rem" 
+                }}>
+                  {apiData.event_location}
+                </div>
+              )}
+              
+              {apiData?.timestamp_start && (
+                <div style={{ 
+                  color: "rgba(255, 255, 255, 0.9)", 
+                  fontSize: "0.9rem" 
+                }}>
+                  {formatDate(apiData.timestamp_start)}
+                  {apiData.timestamp_end && apiData.timestamp_end !== apiData.timestamp_start && 
+                    ` - ${formatDate(apiData.timestamp_end)}`
+                  }
+                </div>
+              )}
+            </div>
           </div>
         )}
         
-        <div style={{ padding: "24px" }}>
-          <div style={{ marginBottom: "16px" }}>
-            <h2 style={{ 
-              margin: "0 0 8px 0", 
-              fontSize: "24px", 
-              fontWeight: "700",
-              color: "#1f2937",
-              lineHeight: "1.3"
-            }}>
-              {ticketData.name}
-            </h2>
-            
-            {apiData?.event_location && (
-              <div style={{
-                display: "inline-flex",
-                alignItems: "center",
-                fontSize: "14px",
-                color: "#6b7280",
-                backgroundColor: "#f3f4f6",
-                padding: "4px 8px",
-                borderRadius: "6px",
-                marginBottom: "12px"
-              }}>
-                📍 {apiData.event_location}
-              </div>
-            )}
-          </div>
-
+        <div style={{ padding: "1.5rem" }}>
           {(apiData?.event_description || ticketData.description) && (
             <div style={{ 
-              margin: "0 0 20px 0", 
-              color: "#4b5563",
-              lineHeight: "1.5",
-              fontSize: "16px"
+              margin: "0 0 1.5rem 0", 
+              color: "#374151",
+              lineHeight: "1.6",
+              fontSize: "0.95rem",
+              textAlign: "left"
             }}
             dangerouslySetInnerHTML={{ 
               __html: apiData?.event_description || ticketData.description 
@@ -242,60 +257,25 @@ function MegoEventRenderer({ eventId, align }: MegoEventProps) {
             />
           )}
 
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
-            gap: "16px",
-            marginBottom: "20px"
-          }}>
-            {apiData?.price !== undefined && (
-              <div style={{
-                backgroundColor: "#f9fafb",
-                padding: "12px",
-                borderRadius: "8px",
-                textAlign: "center"
-              }}>
-                <div style={{ fontSize: "12px", color: "#6b7280", marginBottom: "4px" }}>PRICE</div>
-                <div style={{ fontSize: "18px", fontWeight: "600", color: "#1f2937" }}>
+          <div style={{ marginBottom: "1.5rem" }}>
+            <div style={{ 
+              display: "flex", 
+              justifyContent: "space-between", 
+              alignItems: "center",
+              fontSize: "0.9rem",
+              color: "#6B7280",
+              marginBottom: "1rem"
+            }}>
+              {apiData?.price !== undefined && (
+                <span style={{ fontWeight: "600", color: "#111827" }}>
                   {apiData.price} {apiData.currency?.toUpperCase()}
-                </div>
-              </div>
-            )}
-
-            <div style={{
-              backgroundColor: "#f9fafb",
-              padding: "12px",
-              borderRadius: "8px",
-              textAlign: "center"
-            }}>
-              <div style={{ fontSize: "12px", color: "#6b7280", marginBottom: "4px" }}>MINTED</div>
-              <div style={{ fontSize: "18px", fontWeight: "600", color: "#1f2937" }}>
-                {ticketData.numMinted} / {apiData?.supply || "∞"}
-              </div>
+                </span>
+              )}
+              <span>
+                {ticketData.numMinted} / {apiData?.supply || "∞"} available
+              </span>
             </div>
-          </div>
-
-          {apiData?.timestamp_start && (
-            <div style={{
-              backgroundColor: "#eff6ff",
-              border: "1px solid #dbeafe",
-              padding: "12px",
-              borderRadius: "8px",
-              marginBottom: "16px"
-            }}>
-              <div style={{ fontSize: "12px", color: "#3730a3", fontWeight: "500", marginBottom: "4px" }}>
-                EVENT DATE
-              </div>
-              <div style={{ fontSize: "14px", color: "#1e40af" }}>
-                {formatDate(apiData.timestamp_start)}
-                {apiData.timestamp_end && apiData.timestamp_end !== apiData.timestamp_start && 
-                  ` - ${formatDate(apiData.timestamp_end)}`
-                }
-              </div>
-            </div>
-          )}
-
-          <div style={{ marginBottom: "16px" }}>
+            
             <a 
               href={`https://app.mego.tickets/event/${eventId}/`}
               target="_blank"
@@ -303,43 +283,27 @@ function MegoEventRenderer({ eventId, align }: MegoEventProps) {
               style={{
                 display: "block",
                 width: "100%",
-                padding: "16px 24px",
-                backgroundColor: "#3b82f6",
+                padding: "0.75rem 1.5rem",
+                background: "#3B82F6",
                 color: "white",
                 textDecoration: "none",
-                borderRadius: "12px",
-                fontSize: "16px",
+                borderRadius: "8px",
+                fontSize: "1rem",
                 fontWeight: "600",
                 textAlign: "center",
-                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-                transition: "all 0.2s",
-                border: "none",
+                transition: "background-color 0.2s ease",
                 cursor: "pointer",
                 boxSizing: "border-box"
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "#2563eb";
-                e.currentTarget.style.transform = "translateY(-1px)";
-                e.currentTarget.style.boxShadow = "0 6px 10px -1px rgba(0, 0, 0, 0.15)";
+                e.currentTarget.style.backgroundColor = "#2563EB";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "#3b82f6";
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "0 4px 6px -1px rgba(0, 0, 0, 0.1)";
+                e.currentTarget.style.backgroundColor = "#3B82F6";
               }}
             >
-              🎫 Buy Tickets
+              Buy tickets
             </a>
-          </div>
-
-          <div style={{
-            fontSize: "12px",
-            color: "#9ca3af",
-            borderTop: "1px solid #e5e7eb",
-            paddingTop: "12px"
-          }}>
-            <div>Owner: {ticketData.owner}</div>
-            <div style={{ marginTop: "4px" }}>Event ID: {eventId}</div>
           </div>
         </div>
       </div>
