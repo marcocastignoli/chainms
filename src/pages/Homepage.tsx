@@ -16,8 +16,9 @@ export default function Homepage() {
   };
 
   return (
-    <div className="homepage-container">
-      <div className="hero-banner">
+    <div className="mobile-container">
+      <div className="homepage-container">
+        <div className="hero-banner">
         <div className="hero-content">
           <h1 className="hero-title">ChainMS</h1>
           <p className="hero-subtitle">Blockchain Website Explorer</p>
@@ -104,6 +105,7 @@ export default function Homepage() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

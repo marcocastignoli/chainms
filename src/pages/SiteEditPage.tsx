@@ -155,6 +155,12 @@ export function SiteEditPage() {
       <Puck
         config={config}
         data={data || { content: [], root: { props: {} } }}
+        viewports={[
+          {
+            width: 414,
+            label: "Mobile"
+          }
+        ]}
         onPublish={async (data) => {
           try {
             if (!walletClient) {

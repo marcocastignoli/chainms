@@ -84,14 +84,16 @@ export function SiteViewPage() {
   if (!isConnected) {
     // Show site with wallet connection prompt
     return (
-      <div>
-        <div className="status-banner connect">
-          <p>💡 <strong>Are you the owner of this site?</strong> Connect your wallet to edit it!</p>
-          <button onClick={() => navigate('/')}>
-            Connect Wallet
-          </button>
+      <div className="mobile-container">
+        <div className="site-view-container">
+          <div className="status-banner connect">
+            <p>💡 <strong>Are you the owner of this site?</strong> Connect your wallet to edit it!</p>
+            <button onClick={() => navigate('/')}>
+              Connect Wallet
+            </button>
+          </div>
+          <Render config={config} data={data} />
         </div>
-        <Render config={config} data={data} />
       </div>
     );
   }
@@ -99,40 +101,44 @@ export function SiteViewPage() {
   if (isOwner) {
     // Show edit mode for owner
     return (
-      <div>
-        <div className="status-banner owner">
-          <p><strong>✅ You are the owner of this site!</strong></p>
-          <button 
-            onClick={(e) => {
-              e.preventDefault();
-              console.log("=== EDIT BUTTON CLICKED ===");
-              console.log("Current URL:", window.location.href);
-              console.log("Target URL:", `/puck/${address}/${identifier}`);
-              console.log("Address:", address);
-              console.log("Identifier:", identifier);
-              console.log("Connected Address:", connectedAddress);
-              console.log("Is Owner:", isOwner);
-              console.log("========================");
-              
-              // Navigate to edit page
-              navigate(`/puck/${address}/${identifier}`);
-            }}
-          >
-            Edit this page
-          </button>
+      <div className="mobile-container">
+        <div className="site-view-container">
+          <div className="status-banner owner">
+            <p><strong>✅ You are the owner of this site!</strong></p>
+            <button 
+              onClick={(e) => {
+                e.preventDefault();
+                console.log("=== EDIT BUTTON CLICKED ===");
+                console.log("Current URL:", window.location.href);
+                console.log("Target URL:", `/puck/${address}/${identifier}`);
+                console.log("Address:", address);
+                console.log("Identifier:", identifier);
+                console.log("Connected Address:", connectedAddress);
+                console.log("Is Owner:", isOwner);
+                console.log("========================");
+                
+                // Navigate to edit page
+                navigate(`/puck/${address}/${identifier}`);
+              }}
+            >
+              Edit this page
+            </button>
+          </div>
+          <Render config={config} data={data} />
         </div>
-        <Render config={config} data={data} />
       </div>
     );
   }
 
   // Show read-only view for non-owners
   return (
-    <div>
-      <div className="status-banner readonly">
-        <p>🔒 This site is owned by another address. You can view it but cannot edit.</p>
+    <div className="mobile-container">
+      <div className="site-view-container">
+        <div className="status-banner readonly">
+          <p>🔒 This site is owned by another address. You can view it but cannot edit.</p>
+        </div>
+        <Render config={config} data={data} />
       </div>
-      <Render config={config} data={data} />
     </div>
   );
 }
